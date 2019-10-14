@@ -69,7 +69,7 @@ public class entityArrayMaker {
 				int attackBonusInt = Integer.parseInt(attackBonusString);
 				entityArray[i].attackDiceSides = attackBonusInt;
 				//Attack Bonus
-				String numOfAttacksString = JOptionPane.showInputDialog("What is the number of sides on the attack dice of " + entityArray[i].name + "?");
+				String numOfAttacksString = JOptionPane.showInputDialog("What is the number of attacks that " + entityArray[i].name + " can do per turn?");
 				int numOfAttacksInt = Integer.parseInt(numOfAttacksString);
 				entityArray[i].attacks = numOfAttacksInt;
 				//Number of Attacks
@@ -84,8 +84,8 @@ public class entityArrayMaker {
 			}
 			return entityArray;
 		} else {
-			mNumPlayers = 2;
-			mNumMonsters = 2;
+			mNumPlayers = 8;
+			mNumMonsters = 5;
 			mNumEntities = mNumPlayers + mNumMonsters;
 			entityArray = new Entity[mNumEntities];
 			entityArrayHealth = new Entity[mNumEntities];

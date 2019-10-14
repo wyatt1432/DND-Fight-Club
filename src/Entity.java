@@ -75,7 +75,9 @@ public class Entity {
 		hp = (hp - damage);
 		if (hp <= 0) {
 			alive = false;
+			//System.out.println(this.name + " died.");
 		}
+		//System.out.println(this.name + " took " + damage + " damage.");
 	}
 	
 	public double getDmg() {
