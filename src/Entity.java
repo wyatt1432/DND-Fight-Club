@@ -5,6 +5,7 @@ public class Entity {
 	boolean isMonster;
 	int ac;
 	double hp;
+	double hpCopy;
 	int attackDiceNum;
 	int attackDiceSides;
 	int attackBonus;
@@ -15,12 +16,13 @@ public class Entity {
 	int initiative;
 	boolean alive = true;
 	
-	public Entity (String name, boolean isPlayer, boolean isMonster, int ac, double hp, int attackDiceNum, int attackDiceSides, int attackBonus, int attacks, int toHit) {
+	public Entity (String name, boolean isPlayer, boolean isMonster, int ac, double hp, double hpCopy, int attackDiceNum, int attackDiceSides, int attackBonus, int attacks, int toHit) {
 		this.name = name;
 		this.isPlayer = isPlayer;
 		this.isMonster = isMonster;
 		this.ac = ac;
 		this.hp = hp;
+		this.hpCopy = hpCopy;
 		this.attackDiceNum = attackDiceNum;
 		this.attackDiceSides = attackDiceSides;
 		this.attackBonus = attackBonus;
@@ -65,8 +67,12 @@ public class Entity {
 		return hp;
 	}
 	
+	public double getHPCopy() {
+		return hpCopy;
+	}
+	
 	public void reduceHP(double damage) {
-		hp = hp - damage;
+		hp = (hp - damage);
 		if (hp <= 0) {
 			alive = false;
 		}
