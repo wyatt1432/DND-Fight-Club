@@ -25,13 +25,13 @@ public class Main {
 		//System.out.println("A player went first " + ((((double)myEncounter.playerWentFirst) / totalInterations) * 100) + "% of the time. (Perfectly random: " + (((double)myEncounter.numPlayers / ((double)myEncounter.numPlayers + (double)myEncounter.numMonsters))) * 100 + "%)");
 		//System.out.println("On average, a battle took " + (myEncounter.totalRounds / totalInterations) + " rounds.");
 		
-		System.out.println("Using " + totalInterations + " total interations:");
-		System.out.println(((myEncounter.tpk / totalInterations) * 100) + "% TPK");
-		System.out.println(((myEncounter.totalIsAnyPlayerDead / totalInterations) * 100) + "% > 1 player death");
-		System.out.println(((((double)myEncounter.totalPlayerInitiative)/myEncounter.numPlayers) / totalInterations) + " average player initiative");
-		System.out.println(((((double)myEncounter.totalMonsterInitiative)/myEncounter.numMonsters) / totalInterations) + " average monster initiative.");
-		System.out.println(((((double)myEncounter.playerWentFirst) / totalInterations) * 100) + "% player went first. (Perfectly random: " + (((double)myEncounter.numPlayers / ((double)myEncounter.numPlayers + (double)myEncounter.numMonsters))) * 100 + "%)");
-		System.out.println((myEncounter.totalRounds / totalInterations) + " average length");
+		System.out.println("Using " + (int)totalInterations + " total interations:");
+		System.out.println(String.format("%1$,.2f", ((myEncounter.tpk / totalInterations) * 100)) + "% TPK");
+		System.out.println(String.format("%1$,.2f", ((myEncounter.totalIsAnyPlayerDead / totalInterations) * 100)) + "% > 1 player death");
+		System.out.println(String.format("%1$,.2f", ((((double)myEncounter.totalPlayerInitiative)/myEncounter.numPlayers) / totalInterations)) + " average player initiative");
+		System.out.println(String.format("%1$,.2f", ((((double)myEncounter.totalMonsterInitiative)/myEncounter.numMonsters) / totalInterations)) + " average monster initiative.");
+		System.out.println(String.format("%1$,.2f", ((((double)myEncounter.playerWentFirst) / totalInterations) * 100)) + "% player went first. (Perfectly random: " + String.format("%1$,.2f", (((double)myEncounter.numPlayers / ((double)myEncounter.numPlayers + (double)myEncounter.numMonsters))) * 100) + "%)");
+		System.out.println(String.format("%1$,.2f", (myEncounter.totalRounds / totalInterations)) + " average length");
 		
 		
 		
