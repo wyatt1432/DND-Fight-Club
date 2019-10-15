@@ -5,7 +5,7 @@ public class Encounter {
 	double tpk;
 	Entity[] entityArray;
 	Entity[] entityArrayHealth;
-	int strategy = 1;
+	int strategy = 2;
 	int numPlayers;
 	int numPlayersVer;
 	int numMonsters;
@@ -17,6 +17,8 @@ public class Encounter {
 	double totalMonsterInitiative;
 	double totalPlayerInitiative;
 	double playerWentFirst;
+	double totalPlayerAC;
+	double totalMonsterAC;
 	
 	public Encounter(Entity[] entityArray, Entity[] entityArrayHealth, int numPlayers, int numMonsters) {
 		this.entityArray = entityArray;
@@ -35,7 +37,7 @@ public class Encounter {
 		if (!checkMonstersAlive()) {
 			System.out.println("pickRandomMonster was called when all monsters are dead.");
 		}
-		if (entityArray[index].getAlive() == false) {
+		if (entityArray[index].getIsAlive() == false) {
 			index = pickRandomAliveMonster();
 		}
 		return index;
@@ -46,7 +48,7 @@ public class Encounter {
 		if (!checkPlayersAlive()) {
 			System.out.println("pickRandomPlayer was called when all players are dead.");
 		}
-		if (entityArray[index].getAlive() == false) {
+		if (entityArray[index].getIsAlive() == false) {
 			index = pickRandomAlivePlayer();
 		}
 		return index;
@@ -55,7 +57,7 @@ public class Encounter {
 	public boolean checkMonstersAlive() {
 		boolean isAnyMonsterAlive = false;
 		for (int i = numPlayers; i <= (entityArray.length - 1); i++) {
-			if (entityArray[i].getAlive() == true) {
+			if (entityArray[i].getIsAlive() == true) {
 				isAnyMonsterAlive = true;
 			}
 		}
@@ -65,7 +67,7 @@ public class Encounter {
 	public boolean checkPlayersAlive() {
 		boolean isAnyPlayerAlive = false;
 		for (int i = 0; i < numPlayers; i++) {
-			if (entityArray[i].getAlive() == true) {
+			if (entityArray[i].getIsAlive() == true) {
 				isAnyPlayerAlive = true;
 			}
 		}
@@ -75,31 +77,78 @@ public class Encounter {
 	public boolean checkAnyPlayerDeath() {
 		boolean isAnyPlayerDead = false;
 		for (int i = 0; i < numPlayers; i++) {
-			if (entityArray[i].getAlive() == false) {
+			if (entityArray[i].getIsAlive() == false) {
 				isAnyPlayerDead= true;
 			}
 		}
 		return isAnyPlayerDead;
 	}
 	
-	public void takeTurn(Entity actor) {
-		if (strategy == 1) {
-			if (actor.isPlayer && actor.getAlive()) {
-				for (int i = 0; i < actor.attacks; i++) {
-					if (checkMonstersAlive() && checkPlayersAlive()) {
-						Entity victim = entityArray[pickRandomAliveMonster()];
-						double damage = actor.getRandomDamage();
-						//System.out.println(damage);
-						//double beforeHealth = victim.hp;
-						victim.reduceHP(damage);
-						//System.out.println(actor.getName() + " attacked " + victim.getName() + " while the actor was at " + actor.getHP() + " health and brought the victim to " + victim.getHP() + " from " + beforeHealth + " by doing " + damage + " damage. To check, the attacked is " + actor.getAlive() + " while the victim is now " + victim.getAlive() + "." + " checkPlayersAlive is " + checkPlayersAlive());
-					}
+	public Entity findLowestMonster() {
+		double lowestHP = 500;
+		int lowestHPIndex = 0;
+		for (int i = numPlayers; i <= (entityArray.length - 1); i++) {
+			if (entityArray[i].getHP() < lowestHP && entityArray[i].getIsAlive()) {
+				lowestHPIndex = i;
+				lowestHP = entityArray[i].getHP();
+			}
+		}
+		return entityArray[lowestHPIndex];
+	}
+		
+		public Entity findLowestPlayer() {
+			double lowestHP = 500;
+			int lowestHPIndex = 0;
+			for (int i = 0; i < numPlayers; i++) {
+				if (entityArray[i].getHP() < lowestHP && entityArray[i].getIsAlive()) {
+					lowestHPIndex = i;
+					lowestHP = entityArray[i].getHP();
 				}
 			}
-			if (actor.isMonster && actor.getAlive()) {
-				for (int i = 0; i < actor.attacks; i++) {
-					if (checkMonstersAlive() && checkPlayersAlive()) {
-						entityArray[pickRandomAlivePlayer()].reduceHP(actor.getRandomDamage());
+			return entityArray[lowestHPIndex];
+		}
+	
+	public void takeTurn(Entity actor) {
+		for (int i = 0; i < actor.attacks; i++) {
+			if (checkMonstersAlive() && checkPlayersAlive()) {
+				if (actor.isPlayer && actor.getIsAlive()) {
+					if (strategy == 1) {
+						Entity victim = entityArray[pickRandomAliveMonster()];
+						if (victim.isHitBy(actor)) {
+							double damage = actor.getRandomDamage();
+							//System.out.println(damage);
+							//double beforeHealth = victim.hp;
+							victim.reduceHP(damage);
+						}
+					}
+					if (strategy == 2) {
+						Entity victim = findLowestMonster();
+						if (victim.isHitBy(actor)) {
+							double damage = actor.getRandomDamage();
+							//System.out.println(damage);
+							//double beforeHealth = victim.hp;
+							victim.reduceHP(damage);
+						}
+					}
+				}
+				if (actor.isMonster && actor.getIsAlive()) {
+					if (strategy == 1) {
+						Entity victim = entityArray[pickRandomAlivePlayer()];
+						if (victim.isHitBy(actor)) {
+							double damage = actor.getRandomDamage();
+							//System.out.println(damage);
+							//double beforeHealth = victim.hp;
+							victim.reduceHP(damage);
+						}
+					}
+					if (strategy == 2) {
+						Entity victim = findLowestPlayer();
+						if (victim.isHitBy(actor)) {
+							double damage = actor.getRandomDamage();
+							//System.out.println(damage);
+							//double beforeHealth = victim.hp;
+							victim.reduceHP(damage);
+						}
 					}
 				}
 			}

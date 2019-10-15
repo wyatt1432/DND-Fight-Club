@@ -84,7 +84,7 @@ public class entityArrayMaker {
 			}
 			return entityArray;
 		} else {
-			mNumPlayers = 8;
+			mNumPlayers = 5;
 			mNumMonsters = 5;
 			mNumEntities = mNumPlayers + mNumMonsters;
 			entityArray = new Entity[mNumEntities];

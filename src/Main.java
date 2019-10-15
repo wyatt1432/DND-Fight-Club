@@ -4,7 +4,7 @@ public class Main {
 
 	public static void main(String[] args) {
 			
-		double totalInterations = 100000;
+		double totalInterations = 1000;
 		double totalRounds;
 		double totalPlayerKilled = 0;
 		double totalTPK;
@@ -17,13 +17,11 @@ public class Main {
 				//System.out.println(myEncounter.entityArray[j].getName() + " end with " + myEncounter.entityArray[j].hp + " health.");
 			}
 		}
-		//System.out.println("Using " + totalInterations + " total interations:");
-		//System.out.println("A TPK occured " + ((myEncounter.tpk / totalInterations) * 100) + "% of the time.");
-		//System.out.println("At least 1 player was killed " + ((myEncounter.totalIsAnyPlayerDead / totalInterations) * 100) + "% of the time.");
-		//System.out.println("The average player initative was " + ((((double)myEncounter.totalPlayerInitiative)/myEncounter.numPlayers) / totalInterations) + ".");
-		//System.out.println("The average monster initative was " + ((((double)myEncounter.totalMonsterInitiative)/myEncounter.numMonsters) / totalInterations) + ".");
-		//System.out.println("A player went first " + ((((double)myEncounter.playerWentFirst) / totalInterations) * 100) + "% of the time. (Perfectly random: " + (((double)myEncounter.numPlayers / ((double)myEncounter.numPlayers + (double)myEncounter.numMonsters))) * 100 + "%)");
-		//System.out.println("On average, a battle took " + (myEncounter.totalRounds / totalInterations) + " rounds.");
+		
+		Entity lowestMonster = myEncounter.findLowestMonster();
+		Entity lowestPlayer = myEncounter.findLowestPlayer();
+		System.out.println(myEncounter.findLowestMonster().getName());
+		System.out.println(myEncounter.findLowestPlayer().getName());
 		
 		System.out.println("Using " + (int)totalInterations + " total interations:");
 		System.out.println(String.format("%1$,.2f", ((myEncounter.tpk / totalInterations) * 100)) + "% TPK");

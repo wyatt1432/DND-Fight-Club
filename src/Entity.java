@@ -96,7 +96,7 @@ public class Entity {
 		return initiative;
 	}
 	
-	public boolean getAlive() {
+	public boolean getIsAlive() {
 		return alive;
 	}
 	
@@ -109,6 +109,17 @@ public class Entity {
 		total += attackBonus;
 		// adds attack bonus
 		return total;
+	}
+	
+	public boolean isHitBy(Entity actor) {
+		int roll = randomInt (1, 20);
+		if ((actor.getToHit() + roll) > this.getAC()) {
+			System.out.println(actor.getName() + " hit " + this.getName() + " with a total attack score of " + (actor.getToHit() + roll) + " against " + this.getName() + "'s AC of " + this.getAC() + ".");
+			return true;
+		} else {
+			System.out.println(actor.getName() + " did not hit " + this.getName() + " with a total attack score of " + (actor.getToHit() + roll) + " against " + this.getName() + "'s AC of " + this.getAC() + ".");
+			return false;
+		}
 	}
 	
 	public static int randomInt(int min, int max){
